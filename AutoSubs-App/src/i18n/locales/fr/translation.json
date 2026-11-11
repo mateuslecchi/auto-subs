@@ -575,6 +575,12 @@
         "ready": "Prêt",
         "helper": "Transcrire des fichiers audio ou vidéo et exporter les sous-titres."
       }
+    },
+    "filmcraft": {
+      "description": "Importer dans la séquence FilmCraft active",
+      "connected": "Connecté",
+      "helper": "Lancez avec --control 9876 et saisissez le jeton",
+      "token": "Jeton de session"
     }
   },
   "theme": {
@@ -698,5 +704,15 @@
     "addToTimelineFailed": "Impossible d'ajouter les sous-titres à la timeline",
     "clipsBlocked": "Impossible de placer les sous-titres sur la piste de sortie. Essayez 'Add to New Track'.",
     "reformatFailed": "Échec du reformatage"
+  },
+  "filmcraft": {
+    "errors": {
+      "connectAudio": "Connectez FilmCraft avant d’exporter l’audio.",
+      "connectSubtitles": "Connectez FilmCraft avant l’envoi.",
+      "noDocument": "Aucun document de sous-titres sélectionné.",
+      "noJob": "FilmCraft n’a pas renvoyé de tâche d’export.",
+      "exportTimeout": "L’export audio FilmCraft a expiré."
+    },
+    "mix": "Mix de séquence"
   }
 }

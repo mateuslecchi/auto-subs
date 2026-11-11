@@ -2,7 +2,7 @@
 
 Local-first AI subtitles. No cloud, no subscription, no data leaving your machine.
 
-Use it as a standalone app, or connect to **DaVinci Resolve**, **Adobe Premiere Pro**, and **After Effects**.
+Use it as a standalone app, or connect to **DaVinci Resolve**, **Adobe Premiere Pro**, **After Effects**, and **FilmCraft**.
 
 - 🎙️ **Speech to Subtitles:** Turns audio or video into accurate, timestamped subtitles. Pick from several AI models, from fast and lightweight to maximum accuracy.
 - 👥 **Speaker Labels:** Automatically detects who is speaking and labels each speaker, so you can give each person their own style.
@@ -71,6 +71,10 @@ Download [AutoSubs-linux-x86_64.rpm](https://github.com/tmoroney/auto-subs/relea
 1. Launch AutoSubs and open Premiere Pro or After Effects (the CEP extension loads automatically).
 2. Select the Adobe integration from AutoSubs to export timeline audio for transcription, or import generated subtitles into your project.
 3. In Premiere Pro, subtitles are imported as caption tracks; in After Effects, SRT entries are created as text layers.
+
+### FilmCraft Mode
+
+Start FilmCraft with its authenticated local control channel, then select FilmCraft in AutoSubs and enter the session token. AutoSubs can export the sequence mix for transcription, import SRT captions, and follow subtitle timestamps. See the [FilmCraft integration guide](docs/filmcraft.md).
 
 ### Command Line Interface
 
@@ -191,7 +195,7 @@ In addition to transcription models, AutoSubs downloads a speaker diarization mo
 
 ## Integrations
 
-AutoSubs can run as a standalone subtitle generator, connect directly to DaVinci Resolve, or communicate with Adobe Premiere Pro and After Effects through the bundled CEP extension.
+AutoSubs can run as a standalone subtitle generator, connect to DaVinci Resolve or FilmCraft, or communicate with Adobe Premiere Pro and After Effects through the bundled CEP extension.
 
 Select a Preset Style |  Or create your own
 :-------------------------:|:-------------------------:

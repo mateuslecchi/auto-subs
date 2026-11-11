@@ -585,6 +585,12 @@
         "ready": "Готов",
         "helper": "Транскрибирует аудио- или видеофайлы и экспортирует субтитры."
       }
+    },
+    "filmcraft": {
+      "description": "Импорт субтитров в активную сцену FilmCraft",
+      "connected": "Подключено",
+      "helper": "Запустите с --control 9876 и введите токен",
+      "token": "Токен сеанса"
     }
   },
   "theme": {
@@ -708,5 +714,15 @@
     "addToTimelineFailed": "Не удалось добавить субтитры на таймлайн",
     "clipsBlocked": "Не удалось разместить титры на выходной дорожке. Попробуйте 'Add to New Track'.",
     "reformatFailed": "Ошибка форматирования"
+  },
+  "filmcraft": {
+    "errors": {
+      "connectAudio": "Подключите FilmCraft перед экспортом аудио.",
+      "connectSubtitles": "Подключите FilmCraft перед отправкой.",
+      "noDocument": "Документ субтитров не выбран.",
+      "noJob": "FilmCraft не вернул задачу экспорта.",
+      "exportTimeout": "Время экспорта аудио FilmCraft истекло."
+    },
+    "mix": "Микс секвенции"
   }
 }

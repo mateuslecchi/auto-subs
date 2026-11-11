@@ -578,6 +578,12 @@
         "ready": "準備完了",
         "helper": "音声または動画ファイルを文字起こしし、字幕をエクスポートします。"
       }
+    },
+    "filmcraft": {
+      "description": "字幕をFilmCraftのアクティブなシーケンスに送信",
+      "connected": "接続済み",
+      "helper": "--control 9876で起動し、トークンを入力",
+      "token": "セッショントークン"
     }
   },
   "replaceStrings": {
@@ -698,5 +704,15 @@
     "addToTimelineFailed": "字幕をタイムラインに追加できませんでした",
     "clipsBlocked": "出力トラックにキャプションを配置できませんでした。「Add to New Track」を試してください。",
     "reformatFailed": "再整形に失敗"
+  },
+  "filmcraft": {
+    "errors": {
+      "connectAudio": "音声を書き出す前にFilmCraftを接続してください。",
+      "connectSubtitles": "字幕を送る前にFilmCraftを接続してください。",
+      "noDocument": "字幕ドキュメントが選択されていません。",
+      "noJob": "FilmCraftから書き出しジョブが返されませんでした。",
+      "exportTimeout": "FilmCraftの音声書き出しがタイムアウトしました。"
+    },
+    "mix": "シーケンスのミックス"
   }
 }

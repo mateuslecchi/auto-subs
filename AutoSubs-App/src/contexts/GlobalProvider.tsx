@@ -10,6 +10,7 @@ import { IntegrationProvider } from './IntegrationContext';
 import { AudioPreviewProvider } from './AudioPreviewContext';
 
 import { AdobeProvider } from './AdobeContext';
+import { FilmcraftProvider } from './FilmcraftContext';
 
 interface GlobalProviderProps {
   children: React.ReactNode;
@@ -51,15 +52,17 @@ export function EditorWorkspaceProviders({ children }: EditorWorkspaceProvidersP
   return (
     <ResolveProvider>
       <AdobeProvider>
-        <AudioPreviewProvider>
-          <SubtitleDocumentProvider>
-            <ProgressProvider>
-              <PresetsProvider>
-                {children}
-              </PresetsProvider>
-            </ProgressProvider>
-          </SubtitleDocumentProvider>
-        </AudioPreviewProvider>
+        <FilmcraftProvider>
+          <AudioPreviewProvider>
+            <SubtitleDocumentProvider>
+              <ProgressProvider>
+                <PresetsProvider>
+                  {children}
+                </PresetsProvider>
+              </ProgressProvider>
+            </SubtitleDocumentProvider>
+          </AudioPreviewProvider>
+        </FilmcraftProvider>
       </AdobeProvider>
     </ResolveProvider>
   );

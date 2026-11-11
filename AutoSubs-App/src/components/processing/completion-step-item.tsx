@@ -39,7 +39,7 @@ export function CompletionStepItem({
     } = useSubtitleDocument()
 
     const isResolveConnected = Boolean(timelineInfo?.timelineId) && selectedIntegration === "davinci"
-    const isAdobeConnected = Boolean(timelineInfo?.timelineId) && (selectedIntegration === "premiere" || selectedIntegration === "aftereffects")
+    const isSrtEditorConnected = Boolean(timelineInfo?.timelineId) && (selectedIntegration === "premiere" || selectedIntegration === "aftereffects" || selectedIntegration === "filmcraft")
     const hasSubtitles = subtitles.length > 0
 
     // Sending happens in the viewer's output sheet, where the settings are
@@ -98,7 +98,7 @@ export function CompletionStepItem({
                                     }
                                 />
                             )}
-                            {(isResolveConnected || isAdobeConnected) && (
+                            {(isResolveConnected || isSrtEditorConnected) && (
                                 <Button
                                     variant="outline"
                                     size="sm"

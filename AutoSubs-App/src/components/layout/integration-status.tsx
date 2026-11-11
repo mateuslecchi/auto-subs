@@ -1,7 +1,8 @@
-import { ChevronDown, Check, RotateCcw } from "lucide-react";
+import { ChevronDown, Check, Film, RotateCcw } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useResolve } from "@/contexts/ResolveContext";
 import { useAdobe } from "@/contexts/AdobeContext";
+import { useFilmcraft } from "@/contexts/FilmcraftContext";
 import {
   useIntegration,
   type Integration,
@@ -27,7 +29,8 @@ export function IntegrationStatus() {
     isAfterEffectsConnected,
     refresh: refreshAdobe,
   } = useAdobe();
-  const { selectedIntegration, setSelectedIntegration } = useIntegration();
+  const filmcraft = useFilmcraft();
+  const { selectedIntegration, setSelectedIntegration, filmcraftToken, setFilmcraftToken } = useIntegration();
 
   const isResolveConnected = Boolean(resolveTimeline?.timelineId);
   const integrations = {
@@ -72,6 +75,18 @@ export function IntegrationStatus() {
         ? t("titlebar.aftereffects.tooltip.canGetAudio")
         : t("titlebar.aftereffects.tooltip.openAfterEffects"),
       refresh: refreshAdobe,
+    },
+    filmcraft: {
+      productName: "FilmCraft",
+      logo: "",
+      connected: filmcraft.isConnected,
+      timelineName: filmcraft.timelineInfo.name,
+      projectName: filmcraft.timelineInfo.projectName,
+      description: t("titlebar.filmcraft.description"),
+      connectedText: t("titlebar.filmcraft.connected"),
+      disconnectedText: t("titlebar.status.disconnected"),
+      helperText: t("titlebar.filmcraft.helper"),
+      refresh: filmcraft.refresh,
     },
     standalone: {
       productName: t("titlebar.standalone.productName"),
@@ -122,11 +137,15 @@ export function IntegrationStatus() {
             variant="outline"
             className="flex items-center bg-zinc-50 dark:bg-zinc-900 gap-1.5 h-7 shadow-none rounded-sm px-1.5 text-xs min-w-0 !outline-none !ring-0 focus:!outline-none focus:!ring-0 focus-visible:!outline-none focus-visible:!ring-0"
           >
-            <img
-              src={activeIntegration.logo}
-              alt={activeIntegration.productName}
-              className="size-5 shrink-0"
-            />
+            {selectedIntegration === "filmcraft" ? (
+              <Film className="size-5 shrink-0" aria-label="FilmCraft" />
+            ) : (
+              <img
+                src={activeIntegration.logo}
+                alt={activeIntegration.productName}
+                className="size-5 shrink-0"
+              />
+            )}
             <span className={`truncate min-w-0 ${!activeIntegration.connected ? "text-gray-600 dark:text-gray-400" : ""}`}>
               {activeLabel}
             </span>
@@ -156,6 +175,20 @@ export function IntegrationStatus() {
               <p className="mt-2 text-xs text-muted-foreground">
                 {activeIntegration.helperText}
               </p>
+              {selectedIntegration === "filmcraft" && (
+                <Input
+                  type="password"
+                  value={filmcraftToken}
+                  onChange={(event) => setFilmcraftToken(event.target.value.trim())}
+                  onKeyDown={(event) => {
+                    if (event.key !== "Escape") event.stopPropagation();
+                  }}
+                  placeholder={t("titlebar.filmcraft.token")}
+                  aria-label={t("titlebar.filmcraft.token")}
+                  className="mt-2 h-8 text-xs"
+                  autoComplete="off"
+                />
+              )}
             </div>
           </div>
           <DropdownMenuSeparator />
@@ -167,11 +200,15 @@ export function IntegrationStatus() {
                 onClick={() => setSelectedIntegration(integration)}
                 className="cursor-pointer pl-1.5 pr-3 transition-none"
               >
-                <img
-                  src={item.logo}
-                  alt={item.productName}
-                  className="size-10"
-                />
+                {integration === "filmcraft" ? (
+                  <Film className="size-10 p-2" aria-label="FilmCraft" />
+                ) : (
+                  <img
+                    src={item.logo}
+                    alt={item.productName}
+                    className="size-10"
+                  />
+                )}
                 <div className="flex min-w-0 flex-1 flex-col">
                   <span>{item.productName}</span>
                   <span className="truncate text-xs text-muted-foreground">

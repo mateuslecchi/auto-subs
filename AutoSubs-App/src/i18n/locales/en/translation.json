@@ -595,6 +595,12 @@
         "ready": "Ready",
         "helper": "Transcribe audio or video files and export the subtitles."
       }
+    },
+    "filmcraft": {
+      "description": "Import captions into the active FilmCraft sequence",
+      "connected": "Connected",
+      "helper": "Start with --control 9876 and enter the session token",
+      "token": "Session token"
     }
   },
   "theme": {
@@ -718,5 +724,15 @@
     "addToTimelineFailed": "Couldn't add subtitles to timeline",
     "clipsBlocked": "Couldn't place captions on the output track. Try 'Add to New Track'.",
     "reformatFailed": "Reformat failed"
+  },
+  "filmcraft": {
+    "errors": {
+      "connectAudio": "Connect FilmCraft before exporting audio.",
+      "connectSubtitles": "Connect FilmCraft before sending subtitles.",
+      "noDocument": "No subtitle document is selected.",
+      "noJob": "FilmCraft did not return an export job.",
+      "exportTimeout": "FilmCraft audio export timed out."
+    },
+    "mix": "Sequence mix"
   }
 }

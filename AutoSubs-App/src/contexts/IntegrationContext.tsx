@@ -1,11 +1,13 @@
 import React, { createContext, useContext } from 'react';
 import { useSettingsStore } from '@/stores/settings-store';
 
-export type Integration = "davinci" | "premiere" | "aftereffects" | "standalone";
+export type Integration = "davinci" | "premiere" | "aftereffects" | "filmcraft" | "standalone";
 
 interface IntegrationContextType {
   selectedIntegration: Integration;
   setSelectedIntegration: (integration: Integration) => void;
+  filmcraftToken: string;
+  setFilmcraftToken: (token: string) => void;
 }
 
 const IntegrationContext = createContext<IntegrationContextType | null>(null);
@@ -13,6 +15,8 @@ const IntegrationContext = createContext<IntegrationContextType | null>(null);
 export function IntegrationProvider({ children }: { children: React.ReactNode }) {
   const selectedIntegration = useSettingsStore((s) => s.preferredEditorIntegration);
   const updateSetting = useSettingsStore((s) => s.updateSetting);
+  // Keep the control credential in memory, never in the persisted settings store.
+  const [filmcraftToken, setFilmcraftToken] = React.useState("");
   const setSelectedIntegration = React.useCallback((integration: Integration) => {
     updateSetting("preferredEditorIntegration", integration);
     // Standalone has no timeline to pull audio from; pin file mode on entry.
@@ -23,7 +27,7 @@ export function IntegrationProvider({ children }: { children: React.ReactNode })
   }, [updateSetting]);
 
   return (
-    <IntegrationContext.Provider value={{ selectedIntegration, setSelectedIntegration }}>
+    <IntegrationContext.Provider value={{ selectedIntegration, setSelectedIntegration, filmcraftToken, setFilmcraftToken }}>
       {children}
     </IntegrationContext.Provider>
   );

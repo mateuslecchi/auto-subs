@@ -575,6 +575,12 @@
         "ready": "Bereit",
         "helper": "Transkribiert Audio- oder Videodateien und exportiert die Untertitel."
       }
+    },
+    "filmcraft": {
+      "description": "Untertitel in die aktive FilmCraft-Sequenz senden",
+      "connected": "Verbunden",
+      "helper": "Mit --control 9876 starten und Sitzungstoken eingeben",
+      "token": "Sitzungstoken"
     }
   },
   "theme": {
@@ -698,5 +704,15 @@
     "addToTimelineFailed": "Untertitel konnten nicht zur Timeline hinzugefügt werden",
     "clipsBlocked": "Untertitel konnten nicht auf der Ausgabespur platziert werden. 'Add to New Track' wählen.",
     "reformatFailed": "Formatfehler"
+  },
+  "filmcraft": {
+    "errors": {
+      "connectAudio": "FilmCraft vor dem Audioexport verbinden.",
+      "connectSubtitles": "FilmCraft vor dem Senden verbinden.",
+      "noDocument": "Kein Untertiteldokument ausgewählt.",
+      "noJob": "FilmCraft hat keinen Exportauftrag gemeldet.",
+      "exportTimeout": "FilmCraft-Audioexport hat zu lange gedauert."
+    },
+    "mix": "Sequenzmix"
   }
 }

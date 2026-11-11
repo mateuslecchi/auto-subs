@@ -16,6 +16,7 @@ flowchart TD
     RustBE <-->|Local Crate Calls| AICrates[transcription-engine & diarize]
     RustBE <-->|File Mailbox| Resolve[DaVinci Resolve Lua Server]
     RustBE <-->|WebSocket :8185| Adobe[Adobe CEP Extension]
+    RustBE <-->|Authenticated TCP :9876| FilmCraft[FilmCraft Control Channel]
 ```
 
 ---
@@ -71,6 +72,11 @@ See [Resolve-Integration/docs/caption-styles.md](Resolve-Integration/docs/captio
 * Communicates with Adobe Premiere Pro and After Effects through the bundled CEP extension ([Adobe-Extension](Adobe-Extension)).
 * **Tricky Detail**: The extension launches a WebSocket client connecting to the Tauri app's built-in server ([adobe_bridge.rs](AutoSubs-App/src-tauri/src/adobe_bridge.rs)) to coordinate timeline audio exports and subtitle imports.
 * **Documentation**: The Adobe extension has excellent documentation at [Adobe-Extension/README.md](Adobe-Extension/README.md).
+
+### 4b. FilmCraft Control Channel (Port `9876`)
+* FilmCraft starts with `--control 9876` and requires a fresh 64-character `FILMCRAFT_CONTROL_TOKEN` for the session. AutoSubs keeps the pasted token in React memory only; its Rust client in [filmcraft_bridge.rs](AutoSubs-App/src-tauri/src/filmcraft_bridge.rs) sends authenticated JSON lines to `127.0.0.1:9876`.
+* [FilmcraftContext.tsx](AutoSubs-App/src/contexts/FilmcraftContext.tsx) inspects the active sequence, exports its audio mix as WAV via `file.exportMedia`, polls `jobs.list` for progress and cancellation, imports SRT via `captions.import`, and seeks via `playhead.set`.
+* The FilmCraft connection uses plain caption tracks. Resolve Fusion presets and template styling do not apply. See [docs/filmcraft.md](docs/filmcraft.md).
 
 ### 5. Error Propagation Across the Boundary
 * **The Gotcha**: Because transcription and diarization run fully locally across multiple sub-crates, native C/C++ exceptions and ONNX load errors can easily crash the backend.

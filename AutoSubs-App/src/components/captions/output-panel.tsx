@@ -207,7 +207,7 @@ export function OutputPanel({
   const summaryParts: string[] = [];
   if (!isResolve && !isStandalone) {
     summaryParts.push(
-      selectedIntegration === "aftereffects" ? "After Effects" : "Premiere Pro",
+      selectedIntegration === "filmcraft" ? "FilmCraft" : selectedIntegration === "aftereffects" ? "After Effects" : "Premiere Pro",
     );
   } else {
     summaryParts.push(trackLabel || t("captions.track.none"));

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useCallback, useRef } from 
 import { Subtitle, Speaker, Settings } from '@/types';
 import { useResolve } from '@/contexts/ResolveContext';
 import { useAdobe } from '@/contexts/AdobeContext';
+import { useFilmcraft } from '@/contexts/FilmcraftContext';
 import { useIntegration, type Integration } from '@/contexts/IntegrationContext';
 import { getActiveCensorWords } from '@/censor/merge';
 import { open, save } from '@tauri-apps/plugin-dialog';
@@ -47,6 +48,8 @@ function getTranscriptSourceType(
       return "aftereffects";
     case "davinci":
       return "resolve";
+    case "filmcraft":
+      return "filmcraft";
     default:
       return "unknown";
   }
@@ -105,9 +108,12 @@ export function SubtitleDocumentProvider({ children }: { children: React.ReactNo
   speakersRef.current = speakers;
   const { timelineInfo: resolveTimeline } = useResolve();
   const { timelineInfo: adobeTimeline } = useAdobe();
+  const { timelineInfo: filmcraftTimeline } = useFilmcraft();
   const { selectedIntegration } = useIntegration();
   const isAdobeActive = selectedIntegration === "premiere" || selectedIntegration === "aftereffects";
-  const timelineInfo = isAdobeActive ? adobeTimeline : resolveTimeline;
+  const timelineInfo = selectedIntegration === "filmcraft"
+    ? filmcraftTimeline
+    : isAdobeActive ? adobeTimeline : resolveTimeline;
 
   // Load subtitles when timelineId or fileInput changes
   const loadSubtitles = useCallback(async (audioInputMode: "file" | "timeline", fileInput: string | null, timelineId: string) => {

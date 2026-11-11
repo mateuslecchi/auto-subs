@@ -9,9 +9,11 @@ import { useShallow } from "zustand/react/shallow";
 import { useSettingsStore } from "@/stores/settings-store";
 import { useResolve } from "@/contexts/ResolveContext";
 import { useAdobe } from "@/contexts/AdobeContext";
+import { useFilmcraft } from "@/contexts/FilmcraftContext";
 import { useIntegration } from "@/contexts/IntegrationContext";
 import { useErrorDialog } from "@/contexts/ErrorDialogContext";
 import { ResolveApiError } from "@/api/resolve-api";
+import { FilmcraftExportError } from "@/api/filmcraft-api";
 import SubSlateCard from "@/components/ui/SubSlateCard";
 import type { TranscriptionOptions, EnsureModelsRequest, EnsureModelsResponse } from "@/types";
 import { getActiveCensorWords } from "@/censor/merge";
@@ -114,6 +116,7 @@ export function TranscriptionPanel({
   } = useAdobe();
 
   const { selectedIntegration } = useIntegration();
+  const filmcraft = useFilmcraft();
 
   // Standalone has no timeline: treat it as file mode everywhere in this
   // panel even if a stale persisted setting says otherwise.
@@ -122,18 +125,23 @@ export function TranscriptionPanel({
 
   const isPremiereActive =
     selectedIntegration === "premiere" || selectedIntegration === "aftereffects";
-  const timelineInfo = isPremiereActive ? premiereTimeline : resolveTimeline;
-  const refreshAudioTracks = isPremiereActive ? refreshPremiere : refreshResolve;
-  const getSourceAudio = isPremiereActive
-    ? premiereGetSourceAudio
-    : resolveGetSourceAudio;
-  const cancelRequestedRef = resolveCancelRequestedRef;
-  const isExporting = isPremiereActive
-    ? premiereIsExporting
-    : resolveIsExporting;
-  const exportProgress = isPremiereActive
-    ? premiereExportProgress
-    : resolveExportProgress;
+  const timelineInfo = selectedIntegration === "filmcraft"
+    ? filmcraft.timelineInfo
+    : isPremiereActive ? premiereTimeline : resolveTimeline;
+  const refreshAudioTracks = selectedIntegration === "filmcraft"
+    ? filmcraft.refresh
+    : isPremiereActive ? refreshPremiere : refreshResolve;
+  const getSourceAudio = selectedIntegration === "filmcraft"
+    ? filmcraft.getSourceAudio
+    : isPremiereActive ? premiereGetSourceAudio : resolveGetSourceAudio;
+  const cancelRequestedRef = selectedIntegration === "filmcraft"
+    ? filmcraft.cancelRequestedRef : resolveCancelRequestedRef;
+  const isExporting = selectedIntegration === "filmcraft"
+    ? filmcraft.isExporting
+    : isPremiereActive ? premiereIsExporting : resolveIsExporting;
+  const exportProgress = selectedIntegration === "filmcraft"
+    ? filmcraft.exportProgress
+    : isPremiereActive ? premiereExportProgress : resolveExportProgress;
 
   // Senior Pattern: derive active tracks from the app-aware map instead of a global list
   const activeSelectedTracks =
@@ -412,9 +420,9 @@ export function TranscriptionPanel({
       // Distinguish export-stage failures (thrown by `getSourceAudio` via
       // `exportAudio`) from transcription-stage failures so the dialog title
       // accurately reflects where things went wrong.
-      const isExportFailure =
-        error instanceof ResolveApiError &&
-        (error.func === "ExportAudio" || error.func === "GetExportProgress");
+      const isExportFailure = error instanceof FilmcraftExportError ||
+        (error instanceof ResolveApiError &&
+          (error.func === "ExportAudio" || error.func === "GetExportProgress"));
 
       const fallbackTitle = isExportFailure
         ? tErr("errorDialog.exportFailed", "Audio export failed")

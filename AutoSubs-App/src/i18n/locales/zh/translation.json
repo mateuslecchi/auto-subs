@@ -575,6 +575,12 @@
         "ready": "就绪",
         "helper": "转录音频或视频文件并导出字幕。"
       }
+    },
+    "filmcraft": {
+      "description": "将字幕导入 FilmCraft 当前序列",
+      "connected": "已连接",
+      "helper": "使用 --control 9876 启动并输入令牌",
+      "token": "会话令牌"
     }
   },
   "theme": {
@@ -698,5 +704,15 @@
     "addToTimelineFailed": "无法将字幕添加到时间线",
     "clipsBlocked": "无法在输出轨道上放置字幕。请尝试“Add to New Track”。",
     "reformatFailed": "重新排版失败"
+  },
+  "filmcraft": {
+    "errors": {
+      "connectAudio": "导出音频前请连接 FilmCraft。",
+      "connectSubtitles": "发送字幕前请连接 FilmCraft。",
+      "noDocument": "未选择字幕文档。",
+      "noJob": "FilmCraft 未返回导出任务。",
+      "exportTimeout": "FilmCraft 音频导出超时。"
+    },
+    "mix": "序列混音"
   }
 }

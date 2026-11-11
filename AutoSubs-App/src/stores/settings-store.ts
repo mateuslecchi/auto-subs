@@ -72,6 +72,7 @@ export const DEFAULT_SETTINGS: Settings = {
     davinci: ["1"],
     premiere: [],
     aftereffects: [],
+    filmcraft: ["mix"],
     standalone: [],
   },
   selectedOutputTrack: "1",
@@ -104,6 +105,11 @@ export function normalizePersistedSettings(persisted: unknown): Partial<Settings
   } = persisted as Record<string, unknown>;
 
   const next = rest as Partial<Settings>;
+  // Older installs have no FilmCraft entry; keep its sequence mix selected.
+  next.selectedInputTracksByApp = {
+    ...DEFAULT_SETTINGS.selectedInputTracksByApp,
+    ...next.selectedInputTracksByApp,
+  };
 
   if (isCaptionStyle(captionStyle)) {
     next.captionStyle = captionStyle;

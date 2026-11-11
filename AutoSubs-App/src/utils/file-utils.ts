@@ -25,7 +25,7 @@ export { generateTranscriptTxt } from "./transcript-txt.ts";
 
 const TRANSCRIPT_INDEX_FILENAME = "transcript-index.json";
 
-export type TranscriptSourceType = "standalone" | "premiere" | "aftereffects" | "resolve" | "unknown";
+export type TranscriptSourceType = "standalone" | "premiere" | "aftereffects" | "resolve" | "filmcraft" | "unknown";
 
 export interface TranscriptMetadata {
   transcriptId: string;

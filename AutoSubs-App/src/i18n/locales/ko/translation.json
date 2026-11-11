@@ -578,6 +578,12 @@
         "ready": "준비됨",
         "helper": "오디오 또는 비디오 파일을 전사하고 자막을 내보냅니다."
       }
+    },
+    "filmcraft": {
+      "description": "활성 FilmCraft 시퀀스로 자막 가져오기",
+      "connected": "연결됨",
+      "helper": "--control 9876으로 실행 후 토큰 입력",
+      "token": "세션 토큰"
     }
   },
   "replaceStrings": {
@@ -698,5 +704,15 @@
     "addToTimelineFailed": "자막을 타임라인에 추가할 수 없습니다",
     "clipsBlocked": "출력 트랙에 캡션을 배치할 수 없습니다. 'Add to New Track'을 시도해 보세요.",
     "reformatFailed": "서식 변경 실패"
+  },
+  "filmcraft": {
+    "errors": {
+      "connectAudio": "오디오 내보내기 전에 FilmCraft를 연결하세요.",
+      "connectSubtitles": "자막을 보내기 전에 FilmCraft를 연결하세요.",
+      "noDocument": "선택한 자막 문서가 없습니다.",
+      "noJob": "FilmCraft가 내보내기 작업을 반환하지 않았습니다.",
+      "exportTimeout": "FilmCraft 오디오 내보내기 시간이 초과되었습니다."
+    },
+    "mix": "시퀀스 믹스"
   }
 }

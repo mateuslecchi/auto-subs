@@ -32,6 +32,7 @@ mod resolve_bridge;
 mod resolve_scripts;
 mod resolve_launcher;
 mod adobe_bridge;
+mod filmcraft_bridge;
 mod cli;
 #[cfg(target_os = "macos")]
 
@@ -702,6 +703,7 @@ fn main() {
             resolve_bridge::resolve_bridge,
             ensure_caption_preview_dir,
             adobe_bridge::send_to_adobe,
+            filmcraft_bridge::filmcraft_request,
             trigger_install_update,
             audio_preprocess::extract_audio_peaks,
             cli::cli_command_status,

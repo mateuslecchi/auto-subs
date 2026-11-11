@@ -28,6 +28,7 @@ import { TranscriptHistoryPopover } from "@/components/subtitles/transcript-hist
 import { useSubtitleDocument } from "@/contexts/SubtitleDocumentContext";
 import { useResolve } from "@/contexts/ResolveContext";
 import { useAdobe } from "@/contexts/AdobeContext";
+import { useFilmcraft } from "@/contexts/FilmcraftContext";
 import { useIntegration } from "@/contexts/IntegrationContext";
 import { useSettingsStore } from "@/stores/settings-store";
 import { useOutputPanelStore } from "@/stores/output-panel-store";
@@ -375,11 +376,14 @@ export function SubtitleViewerPanel({
   } = useAdobe();
 
   const { selectedIntegration } = useIntegration();
+  const filmcraft = useFilmcraft();
   const isAdobeActive =
     selectedIntegration === "premiere" ||
     selectedIntegration === "aftereffects";
 
-  const timelineInfo = isAdobeActive ? adobeTimeline : resolveTimeline;
+  const timelineInfo = selectedIntegration === "filmcraft"
+    ? filmcraft.timelineInfo
+    : isAdobeActive ? adobeTimeline : resolveTimeline;
 
   // The store keeps `expanded` true through the sheet's exit animation, but
   // the viewer's chrome — title, document actions, header rule — should revert
@@ -388,7 +392,9 @@ export function SubtitleViewerPanel({
   const requestCloseOutputPanel = useOutputPanelStore((s) => s.requestClose);
   const resetOutputPanel = useOutputPanelStore((s) => s.reset);
 
-  const pushToTimeline = isAdobeActive
+  const pushToTimeline = selectedIntegration === "filmcraft"
+    ? (filename?: string) => filmcraft.pushToTimeline(filename)
+    : isAdobeActive
     ? (
         filename?: string,
         _selectedTemplate?: string,
@@ -397,7 +403,9 @@ export function SubtitleViewerPanel({
       ) => adobePush(filename)
     : resolvePush;
 
-  const jumpToTime = isAdobeActive ? adobeJumpToTime : resolveJumpToTime;
+  const jumpToTime = selectedIntegration === "filmcraft"
+    ? filmcraft.jumpToTime
+    : isAdobeActive ? adobeJumpToTime : resolveJumpToTime;
 
   const { seekToTime: seekAudioPreview } = useAudioPreview();
   const { showError } = useErrorDialog();
@@ -468,9 +476,9 @@ export function SubtitleViewerPanel({
   }, [searchCaseSensitive, searchQuery, searchWholeWord]);
 
   const canReplace = Boolean(searchQuery.trim());
-  const isIntegrationConnected = isAdobeActive
-    ? Boolean(adobeTimeline?.timelineId)
-    : Boolean(resolveTimeline?.timelineId);
+  const isIntegrationConnected = selectedIntegration === "filmcraft"
+    ? filmcraft.isConnected
+    : isAdobeActive ? Boolean(adobeTimeline?.timelineId) : Boolean(resolveTimeline?.timelineId);
   const shellClassName = "flex h-full min-h-0 flex-col overflow-hidden";
   const headerClassName = "shrink-0 p-3 pt-0 pb-1";
 
